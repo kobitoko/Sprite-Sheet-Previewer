@@ -1,0 +1,1 @@
+SpriteSheetsPacked: Make it so it can import also a packed sprite sheet with json of frames etc. Use the common unity json?
