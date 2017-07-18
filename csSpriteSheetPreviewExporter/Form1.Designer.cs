@@ -31,19 +31,22 @@
             this.button1 = new System.Windows.Forms.Button();
             this.previewImageBox = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.exportGifProgress = new System.Windows.Forms.ProgressBar();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.GifButton = new System.Windows.Forms.Button();
             this.buttonZoomOut = new System.Windows.Forms.Button();
             this.buttonZoomIn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.fpsValue = new System.Windows.Forms.TextBox();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.exportGifProgress = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.previewImageBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,7 +65,7 @@
             this.previewImageBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewImageBox.Location = new System.Drawing.Point(3, 16);
             this.previewImageBox.Name = "previewImageBox";
-            this.previewImageBox.Size = new System.Drawing.Size(580, 410);
+            this.previewImageBox.Size = new System.Drawing.Size(580, 398);
             this.previewImageBox.TabIndex = 2;
             this.previewImageBox.TabStop = false;
             this.previewImageBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewImageBox_MouseDown);
@@ -75,14 +78,22 @@
             this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.GifButton);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.groupBox1.Location = new System.Drawing.Point(0, 41);
+            this.groupBox1.Location = new System.Drawing.Point(0, 53);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox1.Size = new System.Drawing.Size(168, 429);
+            this.groupBox1.Size = new System.Drawing.Size(168, 417);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // exportGifProgress
+            // 
+            this.exportGifProgress.Location = new System.Drawing.Point(101, 398);
+            this.exportGifProgress.Name = "exportGifProgress";
+            this.exportGifProgress.Size = new System.Drawing.Size(18, 11);
+            this.exportGifProgress.TabIndex = 2;
+            this.exportGifProgress.Visible = false;
             // 
             // groupBox5
             // 
@@ -129,23 +140,44 @@
             // 
             this.groupBox2.Controls.Add(this.previewImageBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(168, 41);
+            this.groupBox2.Location = new System.Drawing.Point(168, 53);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(586, 429);
+            this.groupBox2.Size = new System.Drawing.Size(586, 417);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.fpsValue);
+            this.groupBox3.Controls.Add(this.trackBar1);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(754, 41);
+            this.groupBox3.Size = new System.Drawing.Size(754, 53);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
+            // 
+            // fpsValue
+            // 
+            this.fpsValue.Location = new System.Drawing.Point(171, 14);
+            this.fpsValue.Name = "fpsValue";
+            this.fpsValue.Size = new System.Drawing.Size(27, 20);
+            this.fpsValue.TabIndex = 3;
+            this.fpsValue.Text = "300";
+            this.fpsValue.TextChanged += new System.EventHandler(this.fpsValue_TextChanged);
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.AutoSize = false;
+            this.trackBar1.Location = new System.Drawing.Point(204, 12);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(456, 35);
+            this.trackBar1.TabIndex = 2;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // groupBox4
             // 
@@ -171,14 +203,6 @@
             this.textBox1.WordWrap = false;
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_TextChanged);
             // 
-            // exportGifProgress
-            // 
-            this.exportGifProgress.Location = new System.Drawing.Point(101, 398);
-            this.exportGifProgress.Name = "exportGifProgress";
-            this.exportGifProgress.Size = new System.Drawing.Size(18, 11);
-            this.exportGifProgress.TabIndex = 2;
-            this.exportGifProgress.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,6 +218,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
@@ -213,6 +239,8 @@
         private System.Windows.Forms.Button GifButton;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ProgressBar exportGifProgress;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TextBox fpsValue;
     }
 }
 

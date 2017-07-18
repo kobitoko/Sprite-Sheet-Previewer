@@ -245,7 +245,18 @@ namespace csSpriteSheetPreviewExporter
                 }
             } // gifCreator.Finish and gifCreator.Dispose is called here
         }
-        
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fpsValue_TextChanged(object sender, EventArgs e)
+        {
+            // this is not really fps but ms delay per frame value atm. i.e. 33ms ~ 30fps
+            if (int.TryParse(fpsValue.Text, out fps))
+                t.Interval = fps;
+        }
     }
 }
 ;
