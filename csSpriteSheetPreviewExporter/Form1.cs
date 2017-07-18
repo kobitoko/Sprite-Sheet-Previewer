@@ -175,7 +175,7 @@ namespace csSpriteSheetPreviewExporter
         private void zoomIn(bool makeBigger)
         {
             int zoomIn = (makeBigger ? 1 : -1);
-            zoom += zoomIn * 0.05f;
+            zoom += zoomIn * 0.1f;
             updateZoom();
         }
 
@@ -203,13 +203,22 @@ namespace csSpriteSheetPreviewExporter
         {
             if (imageStringList.Count == 0)
             {
-                MessageBox.Show("No file was loaded, cannot export an empty gif", "Nothing to export", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No sprite was loaded, cannot export an empty gif.", "Nothing to export", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             GifButton.Enabled = false;
+            // Initialize progressbar
+            exportGifProgress.Visible = true;
+            exportGifProgress.Bounds = GifButton.Bounds;
+            exportGifProgress.Minimum = 1;
+            exportGifProgress.Maximum = imageStringList.Count;
+            exportGifProgress.Value = 1;
+            exportGifProgress.Step = 1;
             // Taken from https://stackoverflow.com/questions/14962969/how-can-i-use-async-to-increase-winforms-performance
             Task task = Task.Run(() => exportToGif());
             await task;
+            MessageBox.Show("Exporting gif finished");
+            exportGifProgress.Visible = false;
             GifButton.Enabled = true;
         }
         
@@ -222,14 +231,19 @@ namespace csSpriteSheetPreviewExporter
 			// Exporting the gif in the same directory as source images. Should ask for confirmation
             using (AnimatedGifCreator gifCreator = AnimatedGif.AnimatedGif.Create($"{path}\\Animated_{filename}.gif", fps))
             {
-                //Enumerate through a List<System.Drawing.Image> or List<System.Drawing.Bitmap> for example
-                foreach (string fullPath in imageStringList)
+                //Enumerate through a List<System.Drawing.Bitmap> of all frames
+                for(int i = 0; i<bitmapList.Count; i++)
                 {
                     //Add the image to gifEncoder with default Quality
-                    gifCreator.AddFrame(fullPath, GifQuality.Bit8);
+                    gifCreator.AddFrame(bitmapList[i], GifQuality.Bit8);
+
+                    // Perform task on thread of UI, thanks to https://stackoverflow.com/questions/36340639/async-progress-bar-update
+                    exportGifProgress.Invoke(new Action(() =>
+                    {
+                        exportGifProgress.PerformStep();
+                    }));
                 }
             } // gifCreator.Finish and gifCreator.Dispose is called here
-            MessageBox.Show("Exporting gif finished");
         }
         
     }
