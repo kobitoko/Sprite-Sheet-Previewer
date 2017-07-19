@@ -19,7 +19,7 @@ namespace csSpriteSheetPreviewExporter
         Timer t = new Timer();
         int[] position = { 0, 0 };
         int[] lastMousePosition = { -1, -1 };
-        bool shouldRender = true;
+        bool pause = false;
 
         public Form1()
         {
@@ -43,7 +43,6 @@ namespace csSpriteSheetPreviewExporter
             if (file.ShowDialog() == DialogResult.OK)
             {
                 indexImg = 0;
-                shouldRender = false;
                 t.Stop();
                 t.Dispose();
                 t = new Timer();
@@ -62,25 +61,26 @@ namespace csSpriteSheetPreviewExporter
                 {
                     bitmapList.Add(new Bitmap(s));
                 }
+                framesBar.Maximum = bitmapList.Count - 1;
+                fpsValue.Text = fps.ToString();
                 previewImageBox.Refresh();
                 t.Interval = fps;
                 t.Start();
                 t.Tick += new EventHandler(renderUpdate);
-                shouldRender = true;
             }
         }
 
         private void renderUpdate(object sender, EventArgs e)
         {
             previewImageBox.Refresh();
-            indexImg = (indexImg + 1) % bitmapList.Count;
+            if(!pause)
+                indexImg = (indexImg + 1) % bitmapList.Count;
+            framesBar.Value = indexImg;
         }
 
         // https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.control.paint?view=netframework-4.5
         private void previewImageBox_Paint(object sender, PaintEventArgs e)
         {
-            if (!shouldRender)
-                return;
             Graphics g = e.Graphics;
             if (bitmapList.Count > 0)
             {
@@ -246,9 +246,9 @@ namespace csSpriteSheetPreviewExporter
             } // gifCreator.Finish and gifCreator.Dispose is called here
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void framesBar_Scroll(object sender, EventArgs e)
         {
-
+            indexImg = framesBar.Value;
         }
 
         private void fpsValue_TextChanged(object sender, EventArgs e)
@@ -256,6 +256,11 @@ namespace csSpriteSheetPreviewExporter
             // this is not really fps but ms delay per frame value atm. i.e. 33ms ~ 30fps
             if (int.TryParse(fpsValue.Text, out fps))
                 t.Interval = fps;
+        }
+
+        private void playButton_Click(object sender, EventArgs e)
+        {
+            pause = !pause;
         }
     }
 }

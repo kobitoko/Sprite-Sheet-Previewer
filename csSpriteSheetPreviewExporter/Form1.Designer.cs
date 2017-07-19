@@ -38,15 +38,16 @@
             this.buttonZoomIn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.playButton = new System.Windows.Forms.Button();
             this.fpsValue = new System.Windows.Forms.TextBox();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.framesBar = new System.Windows.Forms.TrackBar();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.previewImageBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.framesBar)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -106,9 +107,11 @@
             // 
             // GifButton
             // 
-            this.GifButton.Location = new System.Drawing.Point(12, 398);
+            this.GifButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.GifButton.AutoSize = true;
+            this.GifButton.Location = new System.Drawing.Point(8, 386);
             this.GifButton.Name = "GifButton";
-            this.GifButton.Size = new System.Drawing.Size(107, 23);
+            this.GifButton.Size = new System.Drawing.Size(152, 23);
             this.GifButton.TabIndex = 0;
             this.GifButton.Text = "Export Gif";
             this.GifButton.UseVisualStyleBackColor = true;
@@ -149,8 +152,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.playButton);
             this.groupBox3.Controls.Add(this.fpsValue);
-            this.groupBox3.Controls.Add(this.trackBar1);
+            this.groupBox3.Controls.Add(this.framesBar);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
@@ -160,24 +164,36 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
+            // playButton
+            // 
+            this.playButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.playButton.Location = new System.Drawing.Point(666, 14);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(23, 23);
+            this.playButton.TabIndex = 4;
+            this.playButton.Text = "|>";
+            this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
+            // 
             // fpsValue
             // 
             this.fpsValue.Location = new System.Drawing.Point(171, 14);
             this.fpsValue.Name = "fpsValue";
             this.fpsValue.Size = new System.Drawing.Size(27, 20);
             this.fpsValue.TabIndex = 3;
-            this.fpsValue.Text = "300";
+            this.fpsValue.Text = "30";
             this.fpsValue.TextChanged += new System.EventHandler(this.fpsValue_TextChanged);
             // 
-            // trackBar1
+            // framesBar
             // 
-            this.trackBar1.AutoSize = false;
-            this.trackBar1.Location = new System.Drawing.Point(204, 12);
-            this.trackBar1.Maximum = 100;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(456, 35);
-            this.trackBar1.TabIndex = 2;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.framesBar.AutoSize = false;
+            this.framesBar.LargeChange = 1;
+            this.framesBar.Location = new System.Drawing.Point(204, 12);
+            this.framesBar.Maximum = 2;
+            this.framesBar.Name = "framesBar";
+            this.framesBar.Size = new System.Drawing.Size(456, 35);
+            this.framesBar.TabIndex = 2;
+            this.framesBar.Scroll += new System.EventHandler(this.framesBar_Scroll);
             // 
             // groupBox4
             // 
@@ -216,10 +232,11 @@
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.previewImageBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.framesBar)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
@@ -239,8 +256,9 @@
         private System.Windows.Forms.Button GifButton;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ProgressBar exportGifProgress;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar framesBar;
         private System.Windows.Forms.TextBox fpsValue;
+        private System.Windows.Forms.Button playButton;
     }
 }
 
