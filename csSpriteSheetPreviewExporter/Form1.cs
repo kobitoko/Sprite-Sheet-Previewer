@@ -6,20 +6,19 @@ using System.Linq;
 using System.Windows.Forms;
 using AnimatedGif;
 using System.Threading.Tasks;
+using csSpriteSheetPreviewer;
 
 namespace csSpriteSheetPreviewExporter
 {
     public partial class Form1 : Form
     {
-        List<Bitmap> bitmapList = new List<Bitmap>();
-        List<string> imageStringList = new List<string>();
-        int indexImg = 0;
-        int fps = 33; // 1000/30 == 30fps
-        float zoom = 1;
+        Previewer previewer = new Previewer();
         Timer t = new Timer();
+        bool pause = false;
+
+        float zoom = 1;
         int[] position = { 0, 0 };
         int[] lastMousePosition = { -1, -1 };
-        bool pause = false;
 
         public Form1()
         {
@@ -42,29 +41,26 @@ namespace csSpriteSheetPreviewExporter
             //string directoryPath = Path.GetDirectoryName(filePath);
             if (file.ShowDialog() == DialogResult.OK)
             {
-                indexImg = 0;
+                // Stop animation and clear frames of old sprites.
                 t.Stop();
                 t.Dispose();
                 t = new Timer();
-                imageStringList.Clear();
-                foreach(Image i in bitmapList)
-                {
-                    i.Dispose();
-                }
-                bitmapList.Clear();
-                imageStringList.AddRange(file.FileNames.ToList());
-                if (imageStringList.Count == 1) {
+                previewer.Clear();
+                // Store the path of file(s)
+                previewer.FileNames.AddRange(file.FileNames.ToList());
+                // Check if it's a spritesheet (1 image file)
+                if (previewer.FileNames.Count == 1) {
                     groupBox5.Enabled = true;
                     groupBox5.Visible = true;
                 }
-                foreach (string s in imageStringList)
+                foreach (string location in previewer.FileNames)
                 {
-                    bitmapList.Add(new Bitmap(s));
+                    previewer.AddFrame(location);
                 }
-                framesBar.Maximum = bitmapList.Count - 1;
-                fpsValue.Text = fps.ToString();
+                framesBar.Maximum = previewer.TotalFrameCount() - 1;
+                fpsValue.Text = previewer.Fps.ToString();
                 previewImageBox.Refresh();
-                t.Interval = fps;
+                t.Interval = previewer.GetFrameDelay();
                 t.Start();
                 t.Tick += new EventHandler(renderUpdate);
             }
@@ -73,18 +69,18 @@ namespace csSpriteSheetPreviewExporter
         private void renderUpdate(object sender, EventArgs e)
         {
             previewImageBox.Refresh();
-            if(!pause)
-                indexImg = (indexImg + 1) % bitmapList.Count;
-            framesBar.Value = indexImg;
+            if (!pause)
+                previewer.NextFrame();
+            framesBar.Value = previewer.CurrentFrame;
         }
 
         // https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.control.paint?view=netframework-4.5
         private void previewImageBox_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            if (bitmapList.Count > 0)
+            if (previewer.TotalFrameCount() > 0)
             {
-                Image img = bitmapList[indexImg];
+                Image img = previewer.GetCurrentFrame();
                 float ratio = img.Width / img.Height;
                 float newHeight = img.Height * zoom;
                 g.DrawImage(img, position[0], position[1], newHeight*ratio, newHeight);
@@ -201,7 +197,7 @@ namespace csSpriteSheetPreviewExporter
 
         private async void GifButton_Click(object sender, EventArgs e)
         {
-            if (imageStringList.Count == 0)
+            if (previewer.FileNames.Count == 0)
             {
                 MessageBox.Show("No sprite was loaded, cannot export an empty gif.", "Nothing to export", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -211,7 +207,7 @@ namespace csSpriteSheetPreviewExporter
             exportGifProgress.Visible = true;
             exportGifProgress.Bounds = GifButton.Bounds;
             exportGifProgress.Minimum = 1;
-            exportGifProgress.Maximum = imageStringList.Count;
+            exportGifProgress.Maximum = previewer.FileNames.Count;
             exportGifProgress.Value = 1;
             exportGifProgress.Step = 1;
             // Taken from https://stackoverflow.com/questions/14962969/how-can-i-use-async-to-increase-winforms-performance
@@ -226,16 +222,16 @@ namespace csSpriteSheetPreviewExporter
         {
             // Taken from https://github.com/mrousavy/AnimatedGif
             // Remove file extension, and preserves the path of the imported file(s).
-            string filename = Path.GetFileNameWithoutExtension(imageStringList[0]);
-            string path = Path.GetDirectoryName(imageStringList[0]);
+            string filename = Path.GetFileNameWithoutExtension(previewer.FileNames[0]);
+            string path = Path.GetDirectoryName(previewer.FileNames[0]);
 			// Exporting the gif in the same directory as source images. Should ask for confirmation
-            using (AnimatedGifCreator gifCreator = AnimatedGif.AnimatedGif.Create($"{path}\\Animated_{filename}.gif", fps))
+            using (AnimatedGifCreator gifCreator = AnimatedGif.AnimatedGif.Create($"{path}\\Animated_{filename}.gif", previewer.GetFrameDelay()))
             {
                 //Enumerate through a List<System.Drawing.Bitmap> of all frames
-                for(int i = 0; i<bitmapList.Count; i++)
+                for(int i = 0; i < previewer.TotalFrameCount(); i++)
                 {
                     //Add the image to gifEncoder with default Quality
-                    gifCreator.AddFrame(bitmapList[i], GifQuality.Bit8);
+                    gifCreator.AddFrame(previewer.Frames[i], GifQuality.Bit8);
 
                     // Perform task on thread of UI, thanks to https://stackoverflow.com/questions/36340639/async-progress-bar-update
                     exportGifProgress.Invoke(new Action(() =>
@@ -248,14 +244,16 @@ namespace csSpriteSheetPreviewExporter
 
         private void framesBar_Scroll(object sender, EventArgs e)
         {
-            indexImg = framesBar.Value;
+            previewer.CurrentFrame = framesBar.Value;
         }
 
         private void fpsValue_TextChanged(object sender, EventArgs e)
         {
-            // this is not really fps but ms delay per frame value atm. i.e. 33ms ~ 30fps
-            if (int.TryParse(fpsValue.Text, out fps))
-                t.Interval = fps;
+            int tryValue = 0;
+            if (int.TryParse(fpsValue.Text, out tryValue)) {
+                previewer.Fps = tryValue;
+                t.Interval = previewer.GetFrameDelay();
+            }
         }
 
         private void playButton_Click(object sender, EventArgs e)
