@@ -13,8 +13,6 @@ namespace csSpriteSheetPreviewExporter
     public partial class Form1 : Form
     {
         Previewer previewer = new Previewer();
-        Timer t = new Timer();
-        bool pause = false;
 
         float zoom = 1;
         int[] position = { 0, 0 };
@@ -41,11 +39,10 @@ namespace csSpriteSheetPreviewExporter
             //string directoryPath = Path.GetDirectoryName(filePath);
             if (file.ShowDialog() == DialogResult.OK)
             {
-                // Stop animation and clear frames of old sprites.
-                t.Stop();
-                t.Dispose();
-                t = new Timer();
                 previewer.Clear();
+
+                // Todo: Make importing into it's own class, and use it inside Previewer. UI just passes the files to Previewer.
+
                 // Store the path of file(s)
                 previewer.FileNames.AddRange(file.FileNames.ToList());
                 // Check if it's a spritesheet (1 image file)
@@ -57,20 +54,18 @@ namespace csSpriteSheetPreviewExporter
                 {
                     previewer.AddFrame(location);
                 }
+
                 framesBar.Maximum = previewer.TotalFrameCount() - 1;
                 fpsValue.Text = previewer.Fps.ToString();
                 previewImageBox.Refresh();
-                t.Interval = previewer.GetFrameDelay();
-                t.Start();
-                t.Tick += new EventHandler(renderUpdate);
+                previewer.SetFrameRedraw(new EventHandler(renderUpdate));
             }
         }
 
         private void renderUpdate(object sender, EventArgs e)
         {
             previewImageBox.Refresh();
-            if (!pause)
-                previewer.NextFrame();
+            previewer.NextFrame();
             framesBar.Value = previewer.CurrentFrame;
         }
 
@@ -211,37 +206,23 @@ namespace csSpriteSheetPreviewExporter
             exportGifProgress.Value = 1;
             exportGifProgress.Step = 1;
             // Taken from https://stackoverflow.com/questions/14962969/how-can-i-use-async-to-increase-winforms-performance
-            Task task = Task.Run(() => exportToGif());
+            Task task = Task.Run(() => previewer.ExportToGif(updateProgressBar));
             await task;
             MessageBox.Show("Exporting gif finished");
             exportGifProgress.Visible = false;
             GifButton.Enabled = true;
         }
         
-        private void exportToGif()
+        private void updateProgressBar()
         {
-            // Taken from https://github.com/mrousavy/AnimatedGif
-            // Remove file extension, and preserves the path of the imported file(s).
-            string filename = Path.GetFileNameWithoutExtension(previewer.FileNames[0]);
-            string path = Path.GetDirectoryName(previewer.FileNames[0]);
-			// Exporting the gif in the same directory as source images. Should ask for confirmation
-            using (AnimatedGifCreator gifCreator = AnimatedGif.AnimatedGif.Create($"{path}\\Animated_{filename}.gif", previewer.GetFrameDelay()))
+            // Perform task on thread of UI, thanks to https://stackoverflow.com/questions/36340639/async-progress-bar-update
+            // This is called inside another thread, thus has to be called from the original UI thread.
+            exportGifProgress.Invoke(new Action(() =>
             {
-                //Enumerate through a List<System.Drawing.Bitmap> of all frames
-                for(int i = 0; i < previewer.TotalFrameCount(); i++)
-                {
-                    //Add the image to gifEncoder with default Quality
-                    gifCreator.AddFrame(previewer.Frames[i], GifQuality.Bit8);
-
-                    // Perform task on thread of UI, thanks to https://stackoverflow.com/questions/36340639/async-progress-bar-update
-                    exportGifProgress.Invoke(new Action(() =>
-                    {
-                        exportGifProgress.PerformStep();
-                    }));
-                }
-            } // gifCreator.Finish and gifCreator.Dispose is called here
+                exportGifProgress.PerformStep();
+            }));
         }
-
+        
         private void framesBar_Scroll(object sender, EventArgs e)
         {
             previewer.CurrentFrame = framesBar.Value;
@@ -252,13 +233,12 @@ namespace csSpriteSheetPreviewExporter
             int tryValue = 0;
             if (int.TryParse(fpsValue.Text, out tryValue)) {
                 previewer.Fps = tryValue;
-                t.Interval = previewer.GetFrameDelay();
             }
         }
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            pause = !pause;
+            previewer.TogglePause();
         }
     }
 }
