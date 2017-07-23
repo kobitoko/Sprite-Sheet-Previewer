@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using AnimatedGif;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace csSpriteSheetPreviewer
@@ -19,9 +16,11 @@ namespace csSpriteSheetPreviewer
         Timer t = new Timer();
         EventHandler callback = null;
         bool pause = false;
+        SheetManager importer;
 
         public Previewer()
         {
+            importer = new SheetManager(this);
         }
 
         public int Fps {
@@ -40,6 +39,18 @@ namespace csSpriteSheetPreviewer
         public List<string> FileNames { get => imageStringList; }
 
         public List<Bitmap> Frames { get => bitmapList; }
+
+        // Given path of filename(s) it will import those into bitmap list, 
+        // and returns whether it is a single spritesheet or not (seperate animation files).
+        public bool ImportFrames(List<string> pathFilenamesList)
+        {
+            // Store the path of file(s)
+            imageStringList.AddRange(pathFilenamesList);
+            // Get the list of frame image data.
+            importer.GetFramesFromFile();
+            // Check if it's a spritesheet (1 image file)
+            return imageStringList.Count == 1;
+        }
 
         public int GetFrameDelay()
         {
@@ -66,7 +77,6 @@ namespace csSpriteSheetPreviewer
             if(!pause)
                 indexImg = (indexImg + 1) % bitmapList.Count;
         }
-
 
         static public int FpsToMs(int fps)
         {

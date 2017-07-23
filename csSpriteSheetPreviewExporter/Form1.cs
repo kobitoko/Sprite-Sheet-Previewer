@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using AnimatedGif;
 using System.Threading.Tasks;
 using csSpriteSheetPreviewer;
 
@@ -40,21 +38,11 @@ namespace csSpriteSheetPreviewExporter
             if (file.ShowDialog() == DialogResult.OK)
             {
                 previewer.Clear();
-
-                // Todo: Make importing into it's own class, and use it inside Previewer. UI just passes the files to Previewer.
-
-                // Store the path of file(s)
-                previewer.FileNames.AddRange(file.FileNames.ToList());
-                // Check if it's a spritesheet (1 image file)
-                if (previewer.FileNames.Count == 1) {
+                if (previewer.ImportFrames(file.FileNames.ToList()))
+                {
                     groupBox5.Enabled = true;
                     groupBox5.Visible = true;
                 }
-                foreach (string location in previewer.FileNames)
-                {
-                    previewer.AddFrame(location);
-                }
-
                 framesBar.Maximum = previewer.TotalFrameCount() - 1;
                 fpsValue.Text = previewer.Fps.ToString();
                 previewImageBox.Refresh();
