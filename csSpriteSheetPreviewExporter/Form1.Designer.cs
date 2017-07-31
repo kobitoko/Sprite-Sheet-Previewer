@@ -33,6 +33,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.exportGifProgress = new System.Windows.Forms.ProgressBar();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.RowsY = new System.Windows.Forms.Label();
+            this.ColumnsX = new System.Windows.Forms.Label();
+            this.isPixelSize = new System.Windows.Forms.CheckBox();
+            this.RowsYin = new System.Windows.Forms.TextBox();
+            this.ColumnsXin = new System.Windows.Forms.TextBox();
             this.GifButton = new System.Windows.Forms.Button();
             this.buttonZoomOut = new System.Windows.Forms.Button();
             this.buttonZoomIn = new System.Windows.Forms.Button();
@@ -45,6 +50,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.previewImageBox)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.framesBar)).BeginInit();
@@ -66,7 +72,7 @@
             this.previewImageBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewImageBox.Location = new System.Drawing.Point(3, 16);
             this.previewImageBox.Name = "previewImageBox";
-            this.previewImageBox.Size = new System.Drawing.Size(580, 398);
+            this.previewImageBox.Size = new System.Drawing.Size(608, 398);
             this.previewImageBox.TabIndex = 2;
             this.previewImageBox.TabStop = false;
             this.previewImageBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewImageBox_MouseDown);
@@ -83,7 +89,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox1.Size = new System.Drawing.Size(168, 417);
+            this.groupBox1.Size = new System.Drawing.Size(140, 417);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
@@ -98,12 +104,63 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.RowsY);
+            this.groupBox5.Controls.Add(this.ColumnsX);
+            this.groupBox5.Controls.Add(this.isPixelSize);
+            this.groupBox5.Controls.Add(this.RowsYin);
+            this.groupBox5.Controls.Add(this.ColumnsXin);
             this.groupBox5.Location = new System.Drawing.Point(0, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(168, 75);
+            this.groupBox5.Size = new System.Drawing.Size(168, 126);
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "groupBox5";
+            this.groupBox5.Text = "Sprite Sheet Options";
+            // 
+            // RowsY
+            // 
+            this.RowsY.AutoSize = true;
+            this.RowsY.Location = new System.Drawing.Point(62, 39);
+            this.RowsY.Name = "RowsY";
+            this.RowsY.Size = new System.Drawing.Size(34, 13);
+            this.RowsY.TabIndex = 4;
+            this.RowsY.Text = "Rows";
+            // 
+            // ColumnsX
+            // 
+            this.ColumnsX.AutoSize = true;
+            this.ColumnsX.Location = new System.Drawing.Point(5, 39);
+            this.ColumnsX.Name = "ColumnsX";
+            this.ColumnsX.Size = new System.Drawing.Size(47, 13);
+            this.ColumnsX.TabIndex = 3;
+            this.ColumnsX.Text = "Columns";
+            // 
+            // isPixelSize
+            // 
+            this.isPixelSize.AutoSize = true;
+            this.isPixelSize.Location = new System.Drawing.Point(8, 19);
+            this.isPixelSize.Name = "isPixelSize";
+            this.isPixelSize.Size = new System.Drawing.Size(82, 17);
+            this.isPixelSize.TabIndex = 2;
+            this.isPixelSize.Text = "Size in Pixel";
+            this.isPixelSize.UseVisualStyleBackColor = true;
+            // 
+            // RowsYin
+            // 
+            this.RowsYin.Location = new System.Drawing.Point(65, 55);
+            this.RowsYin.Name = "RowsYin";
+            this.RowsYin.Size = new System.Drawing.Size(54, 20);
+            this.RowsYin.TabIndex = 1;
+            this.RowsYin.Text = "1";
+            this.RowsYin.TextChanged += new System.EventHandler(this.RowsYin_TextChanged);
+            // 
+            // ColumnsXin
+            // 
+            this.ColumnsXin.Location = new System.Drawing.Point(8, 55);
+            this.ColumnsXin.Name = "ColumnsXin";
+            this.ColumnsXin.Size = new System.Drawing.Size(51, 20);
+            this.ColumnsXin.TabIndex = 0;
+            this.ColumnsXin.Text = "1";
+            this.ColumnsXin.TextChanged += new System.EventHandler(this.ColumnsXin_TextChanged);
             // 
             // GifButton
             // 
@@ -143,9 +200,9 @@
             // 
             this.groupBox2.Controls.Add(this.previewImageBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(168, 53);
+            this.groupBox2.Location = new System.Drawing.Point(140, 53);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(586, 417);
+            this.groupBox2.Size = new System.Drawing.Size(614, 417);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
@@ -233,6 +290,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.previewImageBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -259,6 +318,11 @@
         private System.Windows.Forms.TrackBar framesBar;
         private System.Windows.Forms.TextBox fpsValue;
         private System.Windows.Forms.Button playButton;
+        private System.Windows.Forms.CheckBox isPixelSize;
+        private System.Windows.Forms.TextBox RowsYin;
+        private System.Windows.Forms.TextBox ColumnsXin;
+        private System.Windows.Forms.Label RowsY;
+        private System.Windows.Forms.Label ColumnsX;
     }
 }
 

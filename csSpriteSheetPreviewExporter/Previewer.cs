@@ -11,7 +11,9 @@ namespace csSpriteSheetPreviewer
     {
         List<string> imageStringList = new List<string>();
         List<Bitmap> bitmapList = new List<Bitmap>();
+        public Bitmap Sheet;
         int indexImg = 0;
+        int indexMaxImg = 1;
         int fps = 30;
         Timer t = new Timer();
         EventHandler callback = null;
@@ -36,8 +38,10 @@ namespace csSpriteSheetPreviewer
 
         public int CurrentFrame { get => indexImg; set => indexImg = value; }
 
-        public List<string> FileNames { get => imageStringList; }
+        public int SetMaxFrame { get => indexMaxImg; set => indexMaxImg = value - 1; }
 
+        public List<string> FileNames { get => imageStringList; }
+        
         public List<Bitmap> Frames { get => bitmapList; }
 
         // Given path of filename(s) it will import those into bitmap list, 
@@ -46,10 +50,19 @@ namespace csSpriteSheetPreviewer
         {
             // Store the path of file(s)
             imageStringList.AddRange(pathFilenamesList);
-            // Get the list of frame image data.
-            importer.GetFramesFromFile();
             // Check if it's a spritesheet (1 image file)
-            return imageStringList.Count == 1;
+            bool isSpriteSheet = imageStringList.Count == 1;
+            if (isSpriteSheet)
+            {
+                importer.LoadSheetFromFile();
+            }
+            else
+            {
+                // Get the list of frame image data.
+                importer.GetFramesFromFiles();
+                SetMaxFrame = bitmapList.Count;
+            }
+            return isSpriteSheet;
         }
 
         public int GetFrameDelay()
@@ -67,15 +80,10 @@ namespace csSpriteSheetPreviewer
             return bitmapList[indexImg];
         }
 
-        public void AddFrame(string pathLocation)
-        {
-            bitmapList.Add(new Bitmap(pathLocation));
-        }
-
         public void NextFrame()
         {
             if(!pause)
-                indexImg = (indexImg + 1) % bitmapList.Count;
+                indexImg = (indexImg + 1) % indexMaxImg;
         }
 
         static public int FpsToMs(int fps)
@@ -121,17 +129,26 @@ namespace csSpriteSheetPreviewer
             } // gifCreator.Finish and gifCreator.Dispose is called here
         }
 
+        public void ChangeSheet(int colx, int rowy, bool isPixelsSize = false)
+        {
+            this.Clear(true);
+            importer.GetFramesFromSheet(colx, rowy, isPixelsSize);
+            t.Start();
+        }
 
         // Stop animation and clear frames of old sprites.
-        public void Clear() {
+        public void Clear(bool onlyFrames=false) {
             t.Stop();
             indexImg = 0;
+            if(Sheet != null && !onlyFrames)
+                Sheet.Dispose();
             foreach (Image i in bitmapList)
             {
                 i.Dispose();
             }
             bitmapList.Clear();
-            imageStringList.Clear();
+            if(!onlyFrames)
+                imageStringList.Clear();
         }
     }
 }
