@@ -11,7 +11,8 @@ namespace csSpriteSheetPreviewer
     {
         List<string> imageStringList = new List<string>();
         List<Bitmap> bitmapList = new List<Bitmap>();
-        public Bitmap Sheet;
+        Bitmap sheet;
+        Size sheetSize;
         int indexImg = 0;
         int indexMaxImg = 1;
         int fps = 30;
@@ -43,6 +44,10 @@ namespace csSpriteSheetPreviewer
         public List<string> FileNames { get => imageStringList; }
         
         public List<Bitmap> Frames { get => bitmapList; }
+
+        public Bitmap SpriteSheet { get => sheet; set => sheet = value; }
+
+        public Size SheetSize { get => sheetSize; set => sheetSize = value; }
 
         // Given path of filename(s) it will import those into bitmap list, 
         // and returns whether it is a single spritesheet or not (seperate animation files).
@@ -84,7 +89,7 @@ namespace csSpriteSheetPreviewer
 
         public void NextFrame()
         {
-            if (!pause)
+            if (!pause && bitmapList.Count > 1)
                 indexImg = (indexImg + 1) % (indexMaxImg+1);
         }
 
@@ -116,8 +121,8 @@ namespace csSpriteSheetPreviewer
             // Taken from https://github.com/mrousavy/AnimatedGif
             // Remove file extension, and preserves the path of the imported file(s).
             string filename = Path.GetFileNameWithoutExtension(this.FileNames[0]);
-        string path = Path.GetDirectoryName(this.FileNames[0]);
-			// Exporting the gif in the same directory as source images. Should ask for confirmation
+            string path = Path.GetDirectoryName(this.FileNames[0]);
+            // Exporting the gif in the same directory as source images. Should ask for confirmation
             using (AnimatedGifCreator gifCreator = AnimatedGif.AnimatedGif.Create($"{path}\\Animated_{filename}.gif", this.GetFrameDelay()))
             {
                 //Enumerate through a List<System.Drawing.Bitmap> of all frames
@@ -142,8 +147,8 @@ namespace csSpriteSheetPreviewer
         public void Clear(bool onlyFrames=false) {
             t.Stop();
             indexImg = 0;
-            if(Sheet != null && !onlyFrames)
-                Sheet.Dispose();
+            if(sheet != null && !onlyFrames)
+                sheet.Dispose();
             foreach (Image i in bitmapList)
             {
                 i.Dispose();

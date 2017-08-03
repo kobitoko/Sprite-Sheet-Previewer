@@ -44,6 +44,7 @@ namespace csSpriteSheetPreviewExporter
                     groupBox5.Visible = true;
                 }
                 framesBar.Maximum = previewer.TotalFrameCount() - 1;
+
                 fpsValue.Text = previewer.Fps.ToString();
                 previewImageBox.Refresh();
                 previewer.SetFrameRedraw(new EventHandler(renderUpdate));
@@ -90,6 +91,7 @@ namespace csSpriteSheetPreviewExporter
                 zoomIn(true);
             else if (e.Delta < 0)
                 zoomIn(false);
+            previewImageBox.Refresh();
         }
 
         private void previewImageBox_MouseMove(object sender, MouseEventArgs e)
@@ -102,7 +104,7 @@ namespace csSpriteSheetPreviewExporter
 
             lastMousePosition[0] = e.X;
             lastMousePosition[1] = e.Y;
-
+            previewImageBox.Refresh();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

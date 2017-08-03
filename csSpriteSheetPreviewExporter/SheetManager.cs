@@ -29,7 +29,9 @@ namespace csSpriteSheetPreviewer
 
         public void LoadSheetFromFile()
         {
-            previewer.Sheet = new Bitmap(previewer.FileNames.First<string>());
+            previewer.SpriteSheet = new Bitmap(previewer.FileNames.First<string>());
+            previewer.Frames.Add(previewer.SpriteSheet.Clone() as Bitmap);
+            previewer.SheetSize = previewer.SpriteSheet.Size;
         }
 
         public void GetFramesFromSheet(int colx, int rowy, bool isPixelsSize)
@@ -37,8 +39,8 @@ namespace csSpriteSheetPreviewer
             Size size = new Size();
             if (!isPixelsSize)
             {
-                size.Width = previewer.Sheet.Size.Width / colx;
-                size.Height = previewer.Sheet.Size.Height / rowy;
+                size.Width = previewer.SheetSize.Width / colx;
+                size.Height = previewer.SheetSize.Height / rowy;
             } else
             {
                 size = new Size(colx, rowy);
@@ -48,16 +50,18 @@ namespace csSpriteSheetPreviewer
                 for (int j = 0; j < colx-1; j++)
                 {
                     RectangleF frame = new RectangleF(i*size.Width, j*size.Height, (i+1) * size.Width, (j+1) * size.Height);
-                    Console.Write(i * size.Width + "w " + j * size.Height + "h " + (i + 1) * size.Width + "w1 " + (j + 1) * size.Height + "h1 ");
-                    previewer.Frames.Add(previewer.Sheet.Clone(frame, previewer.Sheet.PixelFormat));
+                    Console.WriteLine(i * size.Width + "w ");
+                    Console.WriteLine(j * size.Height + "h ");
+                    Console.WriteLine((i + 1) * size.Width + "w1 ");
+                    Console.WriteLine((j + 1) * size.Height + "h1 ");
+                    previewer.Frames.Add(previewer.SpriteSheet.Clone(frame, previewer.SpriteSheet.PixelFormat));
                 }
             }
             previewer.SetMaxFrame = Math.Max(previewer.Frames.Count, 1);
-            Console.WriteLine("not null? " + previewer.Sheet != null);
-            Console.WriteLine(previewer.Frames.Count); // <- 0, does frame adding not work for some reason?? cloning crop fails?
-            Console.WriteLine(previewer.Sheet.Size.ToString());
             Console.WriteLine(size.ToString());
-
+            Console.WriteLine("not null? " + previewer.SpriteSheet != null);
+            Console.WriteLine(previewer.Frames.Count);
+            Console.WriteLine(previewer.SheetSize);
         }
     }
 }
