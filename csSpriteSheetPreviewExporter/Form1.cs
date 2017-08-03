@@ -38,13 +38,12 @@ namespace csSpriteSheetPreviewExporter
             if (file.ShowDialog() == DialogResult.OK)
             {
                 previewer.Clear();
-                framesBar.Maximum = previewer.TotalFrameCount() - 1;
                 if (previewer.ImportFrames(file.FileNames.ToList()))
                 {
                     groupBox5.Enabled = true;
                     groupBox5.Visible = true;
-                    framesBar.Maximum = previewer.TotalFrameCount();
                 }
+                framesBar.Maximum = previewer.TotalFrameCount() - 1;
                 fpsValue.Text = previewer.Fps.ToString();
                 previewImageBox.Refresh();
                 previewer.SetFrameRedraw(new EventHandler(renderUpdate));

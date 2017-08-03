@@ -61,6 +61,8 @@ namespace csSpriteSheetPreviewer
                 // Get the list of frame image data.
                 importer.GetFramesFromFiles();
                 SetMaxFrame = bitmapList.Count;
+                Console.WriteLine(bitmapList.Count);
+                Console.WriteLine(SetMaxFrame);
             }
             return isSpriteSheet;
         }
@@ -82,8 +84,8 @@ namespace csSpriteSheetPreviewer
 
         public void NextFrame()
         {
-            if(!pause)
-                indexImg = (indexImg + 1) % indexMaxImg;
+            if (!pause)
+                indexImg = (indexImg + 1) % (indexMaxImg+1);
         }
 
         static public int FpsToMs(int fps)

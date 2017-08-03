@@ -48,6 +48,7 @@ namespace csSpriteSheetPreviewer
                 for (int j = 0; j < colx-1; j++)
                 {
                     RectangleF frame = new RectangleF(i*size.Width, j*size.Height, (i+1) * size.Width, (j+1) * size.Height);
+                    Console.Write(i * size.Width + "w " + j * size.Height + "h " + (i + 1) * size.Width + "w1 " + (j + 1) * size.Height + "h1 ");
                     previewer.Frames.Add(previewer.Sheet.Clone(frame, previewer.Sheet.PixelFormat));
                 }
             }
