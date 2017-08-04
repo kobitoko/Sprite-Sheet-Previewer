@@ -30,6 +30,7 @@ namespace csSpriteSheetPreviewer
         public void LoadSheetFromFile()
         {
             previewer.SpriteSheet = new Bitmap(previewer.FileNames.First<string>());
+            // Clone it so calling Clear in previwer won't free up the Bitmap spriteSheet.
             previewer.Frames.Add(previewer.SpriteSheet.Clone() as Bitmap);
             previewer.SheetSize = previewer.SpriteSheet.Size;
         }
@@ -43,25 +44,25 @@ namespace csSpriteSheetPreviewer
                 size.Height = previewer.SheetSize.Height / rowy;
             } else
             {
-                size = new Size(colx, rowy);
+                size.Width = colx;
+                size.Height = rowy;
             }
-            for (int i = 0; i < rowy-1; i++)
+            for (int i = 0; i < rowy; i++)
             {
-                for (int j = 0; j < colx-1; j++)
+                for (int j = 0; j < colx; j++)
                 {
-                    RectangleF frame = new RectangleF(i*size.Width, j*size.Height, (i+1) * size.Width, (j+1) * size.Height);
-                    Console.WriteLine(i * size.Width + "w ");
-                    Console.WriteLine(j * size.Height + "h ");
-                    Console.WriteLine((i + 1) * size.Width + "w1 ");
-                    Console.WriteLine((j + 1) * size.Height + "h1 ");
+                    float x = Math.Min(j * size.Width, previewer.SheetSize.Width - 1);
+                    float y = Math.Min(i * size.Height, previewer.SheetSize.Height - 1);
+                    float x2 = size.Width;
+                    float y2 = size.Height;
+                    if (x+x2 > previewer.SheetSize.Width || y+y2 > previewer.SheetSize.Width || x < 0 || y < 0 )
+                        continue;
+                    RectangleF frame = new RectangleF(x, y, x2, y2);
+                    //Console.WriteLine($"current i{i} and current j{j}. Colx{colx} rowy{rowy}, size{size.ToString()}, frame{frame.ToString()}");
+                    //Console.WriteLine($"Any frames? {previewer.Frames.Count}");
                     previewer.Frames.Add(previewer.SpriteSheet.Clone(frame, previewer.SpriteSheet.PixelFormat));
                 }
             }
-            previewer.SetMaxFrame = Math.Max(previewer.Frames.Count, 1);
-            Console.WriteLine(size.ToString());
-            Console.WriteLine("not null? " + previewer.SpriteSheet != null);
-            Console.WriteLine(previewer.Frames.Count);
-            Console.WriteLine(previewer.SheetSize);
         }
     }
 }

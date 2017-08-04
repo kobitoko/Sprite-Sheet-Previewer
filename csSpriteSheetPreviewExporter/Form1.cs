@@ -250,6 +250,7 @@ namespace csSpriteSheetPreviewExporter
             x = (x < 1 ? 1 : x);
             y = (y < 1 ? 1 : y);
             previewer.ChangeSheet(x, y, isPixelSize.Checked);
+            framesBar.Maximum = previewer.TotalFrameCount() - 1;
         }
 
     }

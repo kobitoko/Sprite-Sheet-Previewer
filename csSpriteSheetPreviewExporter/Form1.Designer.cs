@@ -72,7 +72,7 @@
             this.previewImageBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewImageBox.Location = new System.Drawing.Point(3, 16);
             this.previewImageBox.Name = "previewImageBox";
-            this.previewImageBox.Size = new System.Drawing.Size(608, 398);
+            this.previewImageBox.Size = new System.Drawing.Size(578, 398);
             this.previewImageBox.TabIndex = 2;
             this.previewImageBox.TabStop = false;
             this.previewImageBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewImageBox_MouseDown);
@@ -89,7 +89,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox1.Size = new System.Drawing.Size(140, 417);
+            this.groupBox1.Size = new System.Drawing.Size(170, 417);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
@@ -200,9 +200,9 @@
             // 
             this.groupBox2.Controls.Add(this.previewImageBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(140, 53);
+            this.groupBox2.Location = new System.Drawing.Point(170, 53);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(614, 417);
+            this.groupBox2.Size = new System.Drawing.Size(584, 417);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);

@@ -140,6 +140,7 @@ namespace csSpriteSheetPreviewer
         {
             this.Clear(true);
             importer.GetFramesFromSheet(colx, rowy, isPixelsSize);
+            SetMaxFrame = Math.Max(Frames.Count, 1);
             t.Start();
         }
 
