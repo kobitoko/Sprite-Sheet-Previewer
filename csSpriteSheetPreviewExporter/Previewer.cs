@@ -134,10 +134,10 @@ namespace csSpriteSheetPreviewer
             } // gifCreator.Finish and gifCreator.Dispose is called here
         }
 
-        public void ChangeSheet(int colx, int rowy, bool isPixelsSize = false)
+        public void ChangeSheet(int colx, int rowy)
         {
             this.Clear(true);
-            importer.GetFramesFromSheet(colx, rowy, isPixelsSize);
+            importer.GetFramesFromSheet(colx, rowy);
             SetMaxFrame = Math.Max(Frames.Count, 1);
             t.Start();
         }

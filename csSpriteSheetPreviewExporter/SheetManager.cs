@@ -35,18 +35,11 @@ namespace csSpriteSheetPreviewer
             previewer.SheetSize = previewer.SpriteSheet.Size;
         }
 
-        public void GetFramesFromSheet(int colx, int rowy, bool isPixelsSize)
+        public void GetFramesFromSheet(int colx, int rowy)
         {
             Size size = new Size();
-            if (!isPixelsSize)
-            {
-                size.Width = previewer.SheetSize.Width / colx;
-                size.Height = previewer.SheetSize.Height / rowy;
-            } else
-            {
-                size.Width = colx;
-                size.Height = rowy;
-            }
+            size.Width = previewer.SheetSize.Width / colx;
+            size.Height = previewer.SheetSize.Height / rowy;
             for (int i = 0; i < rowy; i++)
             {
                 for (int j = 0; j < colx; j++)

@@ -252,7 +252,7 @@ namespace csSpriteSheetPreviewExporter
             int.TryParse(RowsYin.Text, out y);
             x = (x < 1 ? 1 : x);
             y = (y < 1 ? 1 : y);
-            previewer.ChangeSheet(x, y, isPixelSize.Checked);
+            previewer.ChangeSheet(x, y);
             framesBar.Maximum = previewer.TotalFrameCount() - 1;
         }
 

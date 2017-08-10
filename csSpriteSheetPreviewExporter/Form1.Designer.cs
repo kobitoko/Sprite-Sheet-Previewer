@@ -35,7 +35,6 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.RowsY = new System.Windows.Forms.Label();
             this.ColumnsX = new System.Windows.Forms.Label();
-            this.isPixelSize = new System.Windows.Forms.CheckBox();
             this.RowsYin = new System.Windows.Forms.TextBox();
             this.ColumnsXin = new System.Windows.Forms.TextBox();
             this.GifButton = new System.Windows.Forms.Button();
@@ -106,7 +105,6 @@
             // 
             this.groupBox5.Controls.Add(this.RowsY);
             this.groupBox5.Controls.Add(this.ColumnsX);
-            this.groupBox5.Controls.Add(this.isPixelSize);
             this.groupBox5.Controls.Add(this.RowsYin);
             this.groupBox5.Controls.Add(this.ColumnsXin);
             this.groupBox5.Location = new System.Drawing.Point(0, 6);
@@ -133,16 +131,6 @@
             this.ColumnsX.Size = new System.Drawing.Size(47, 13);
             this.ColumnsX.TabIndex = 3;
             this.ColumnsX.Text = "Columns";
-            // 
-            // isPixelSize
-            // 
-            this.isPixelSize.AutoSize = true;
-            this.isPixelSize.Location = new System.Drawing.Point(8, 19);
-            this.isPixelSize.Name = "isPixelSize";
-            this.isPixelSize.Size = new System.Drawing.Size(82, 17);
-            this.isPixelSize.TabIndex = 2;
-            this.isPixelSize.Text = "Size in Pixel";
-            this.isPixelSize.UseVisualStyleBackColor = true;
             // 
             // RowsYin
             // 
@@ -318,7 +306,6 @@
         private System.Windows.Forms.TrackBar framesBar;
         private System.Windows.Forms.TextBox fpsValue;
         private System.Windows.Forms.Button playButton;
-        private System.Windows.Forms.CheckBox isPixelSize;
         private System.Windows.Forms.TextBox RowsYin;
         private System.Windows.Forms.TextBox ColumnsXin;
         private System.Windows.Forms.Label RowsY;
