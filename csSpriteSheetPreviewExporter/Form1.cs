@@ -37,11 +37,16 @@ namespace csSpriteSheetPreviewExporter
             //string directoryPath = Path.GetDirectoryName(filePath);
             if (file.ShowDialog() == DialogResult.OK)
             {
+                position[0] = position[1] = 0;
                 previewer.Clear();
                 if (previewer.ImportFrames(file.FileNames.ToList()))
                 {
                     groupBox5.Enabled = true;
                     groupBox5.Visible = true;
+                } else
+                {
+                    groupBox5.Enabled = false;
+                    groupBox5.Visible = false;
                 }
                 framesBar.Maximum = previewer.TotalFrameCount() - 1;
 
@@ -65,9 +70,7 @@ namespace csSpriteSheetPreviewExporter
             if (previewer.TotalFrameCount() > 0)
             {
                 Image img = previewer.GetCurrentFrame();
-                float ratio = img.Width / img.Height;
-                float newHeight = img.Height * zoom;
-                g.DrawImage(img, position[0], position[1], newHeight*ratio, newHeight);
+                g.DrawImage(img, position[0], position[1], img.Width * zoom, img.Height * zoom);
             }
         }
 

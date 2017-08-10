@@ -51,15 +51,13 @@ namespace csSpriteSheetPreviewer
             {
                 for (int j = 0; j < colx; j++)
                 {
-                    float x = Math.Min(j * size.Width, previewer.SheetSize.Width - 1);
-                    float y = Math.Min(i * size.Height, previewer.SheetSize.Height - 1);
+                    float x = Math.Min(j * size.Width, previewer.SheetSize.Width);
+                    float y = Math.Min(i * size.Height, previewer.SheetSize.Height);
                     float x2 = size.Width;
                     float y2 = size.Height;
-                    if (x+x2 > previewer.SheetSize.Width || y+y2 > previewer.SheetSize.Width || x < 0 || y < 0 )
+                    if (x+x2 > previewer.SheetSize.Width || y+y2 > previewer.SheetSize.Width || x2 < 1 || y2 < 1 )
                         continue;
                     RectangleF frame = new RectangleF(x, y, x2, y2);
-                    //Console.WriteLine($"current i{i} and current j{j}. Colx{colx} rowy{rowy}, size{size.ToString()}, frame{frame.ToString()}");
-                    //Console.WriteLine($"Any frames? {previewer.Frames.Count}");
                     previewer.Frames.Add(previewer.SpriteSheet.Clone(frame, previewer.SpriteSheet.PixelFormat));
                 }
             }
