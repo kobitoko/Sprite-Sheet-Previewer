@@ -108,7 +108,7 @@
             this.SpriteSheetOptions.Controls.Add(this.ColumnsX);
             this.SpriteSheetOptions.Controls.Add(this.RowsYin);
             this.SpriteSheetOptions.Controls.Add(this.ColumnsXin);
-            this.SpriteSheetOptions.Location = new System.Drawing.Point(129, 14);
+            this.SpriteSheetOptions.Location = new System.Drawing.Point(146, 14);
             this.SpriteSheetOptions.Name = "SpriteSheetOptions";
             this.SpriteSheetOptions.Size = new System.Drawing.Size(205, 37);
             this.SpriteSheetOptions.TabIndex = 1;
