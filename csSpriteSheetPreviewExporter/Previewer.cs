@@ -19,6 +19,7 @@ namespace csSpriteSheetPreviewer
         Timer t = new Timer();
         EventHandler callback = null;
         bool pause = false;
+        bool isSpriteSheet = false;
         SheetManager importer;
 
         public Previewer()
@@ -56,10 +57,11 @@ namespace csSpriteSheetPreviewer
             // Store the path of file(s)
             imageStringList.AddRange(pathFilenamesList);
             // Check if it's a spritesheet (1 image file)
-            bool isSpriteSheet = imageStringList.Count == 1;
+            isSpriteSheet = imageStringList.Count == 1;
             if (isSpriteSheet)
             {
                 importer.LoadSheetFromFile();
+                SetMaxFrame = importer.FrameRects.Count;
             }
             else
             {
@@ -77,17 +79,32 @@ namespace csSpriteSheetPreviewer
 
         public int TotalFrameCount()
         {
-            return bitmapList.Count;
+            int count = 0;
+            if (isSpriteSheet)
+                count = importer.FrameRects.Count;
+            else
+                count = bitmapList.Count;
+            return count;
         }
 
         public Bitmap GetCurrentFrame()
         {
-            return bitmapList[indexImg];
+            return GetFrame(indexImg);
+        }
+
+        public Bitmap GetFrame(int index)
+        {
+            Bitmap frameToReturn;
+            if (isSpriteSheet)
+                frameToReturn = SpriteSheet.Clone(importer.FrameRects[index], SpriteSheet.PixelFormat);
+            else
+                frameToReturn = bitmapList[index];
+            return frameToReturn;
         }
 
         public void NextFrame()
         {
-            if (!pause && bitmapList.Count > 1)
+            if (!pause && (bitmapList.Count > 1 || importer.FrameRects.Count > 1))
                 indexImg = (indexImg + 1) % (indexMaxImg+1);
         }
 
@@ -123,11 +140,11 @@ namespace csSpriteSheetPreviewer
             // Exporting the gif in the same directory as source images. Should ask for confirmation
             using (AnimatedGifCreator gifCreator = AnimatedGif.AnimatedGif.Create($"{path}\\Animated_{filename}.gif", this.GetFrameDelay()))
             {
-                //Enumerate through a List<System.Drawing.Bitmap> of all frames
-                for(int i = 0; i<this.TotalFrameCount(); i++)
+                //Enumerate through all the frames
+                for (int i = 0; i<SetMaxFrame; i++)
                 {
                     //Add the image to gifEncoder with default Quality
-                    gifCreator.AddFrame(this.Frames[i], GifQuality.Bit8);
+                    gifCreator.AddFrame(GetFrame(i), GifQuality.Bit8); 
                     // Delegate, calls function to update the progressbar in the UI.
                     UiProgressUpdate();
                 }
@@ -138,7 +155,7 @@ namespace csSpriteSheetPreviewer
         {
             this.Clear(true);
             importer.GetFramesFromSheet(colx, rowy);
-            SetMaxFrame = Math.Max(Frames.Count, 1);
+            SetMaxFrame = Math.Max(importer.FrameRects.Count, 1);
             t.Start();
         }
 
