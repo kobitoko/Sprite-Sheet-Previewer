@@ -157,7 +157,7 @@ namespace csSpriteSheetPreviewer
                     if(isSpriteSheet)
                         gifCreator.AddFrame(sheet.Clone(importer.FrameRects[i], SpriteSheet.PixelFormat), GifQuality.Bit8);
                     else
-                        gifCreator.AddFrame(GetFrame(i), GifQuality.Bit8); 
+                        gifCreator.AddFrame(new Bitmap(imageStringList[i]), GifQuality.Bit8); 
                     // Delegate, calls function to update the progressbar in the UI.
                     UiProgressUpdate();
                 }
