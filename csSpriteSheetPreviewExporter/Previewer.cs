@@ -38,6 +38,11 @@ namespace csSpriteSheetPreviewer
             }
         }
 
+        public bool isPaused()
+        {
+            return pause;
+        }
+
         public int CurrentFrame { get => indexImg; set => indexImg = value; }
 
         public int SetMaxFrame { get => indexMaxImg; set => indexMaxImg = value - 1; }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -24,8 +24,8 @@ namespace csSpriteSheetPreviewExporter
 
             // Add the paint event to the picture box
             previewImageBox.Paint += new PaintEventHandler(this.previewImageBox_Paint);
-            groupBox5.Enabled = false;
-            groupBox5.Visible = false;
+            SpriteSheetOptions.Enabled = false;
+            SpriteSheetOptions.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -41,18 +41,20 @@ namespace csSpriteSheetPreviewExporter
                 previewer.Clear();
                 if (previewer.ImportFrames(file.FileNames.ToList()))
                 {
-                    groupBox5.Enabled = true;
-                    groupBox5.Visible = true;
+                    SpriteSheetOptions.Enabled = true;
+                    SpriteSheetOptions.Visible = true;
                 } else
                 {
-                    groupBox5.Enabled = false;
-                    groupBox5.Visible = false;
+                    SpriteSheetOptions.Enabled = false;
+                    SpriteSheetOptions.Visible = false;
                 }
                 framesBar.Maximum = previewer.TotalFrameCount() - 1;
-
                 fpsValue.Text = previewer.Fps.ToString();
+                RowsYin.Text = "1";
+                ColumnsXin.Text = "1";
                 previewImageBox.Refresh();
                 previewer.SetFrameRedraw(new EventHandler(renderUpdate));
+                Text = $"Sprite Sheet Previewer - {Path.GetFileName(file.FileName)}";
             }
         }
 
@@ -207,6 +209,10 @@ namespace csSpriteSheetPreviewExporter
         private void playButton_Click(object sender, EventArgs e)
         {
             previewer.TogglePause();
+            if (!previewer.isPaused())
+                playButton.Text = "|>";
+            else
+                playButton.Text = "| |";
         }
 
         private void RowsYin_TextChanged(object sender, EventArgs e)
@@ -230,7 +236,6 @@ namespace csSpriteSheetPreviewExporter
             previewer.ChangeSheet(x, y);
             framesBar.Maximum = previewer.TotalFrameCount() - 1;
         }
-
     }
 }
 ;
