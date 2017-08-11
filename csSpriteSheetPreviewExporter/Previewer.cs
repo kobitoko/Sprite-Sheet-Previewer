@@ -33,7 +33,12 @@ namespace csSpriteSheetPreviewer
 
             set
             {
-                fps = value;
+                int newFps = value;
+                if (newFps > 999)
+                    newFps = 999;
+                if (newFps < 1)
+                    newFps = 1;
+                fps = newFps;
                 t.Interval = this.GetFrameDelay();
             }
         }
@@ -164,6 +169,12 @@ namespace csSpriteSheetPreviewer
             if (!isSpriteSheet)
                 return;
             t.Stop();
+            // It shall be not lower than 1.
+            colx = (colx < 1 ? 1 : colx);
+            rowy = (rowy < 1 ? 1 : rowy);
+            // It shall be not higher than 999
+            colx = (colx > 999 ? 999 : colx);
+            rowy = (rowy > 999 ? 999 : rowy);
             importer.GetFramesFromSheet(colx, rowy);
             indexImg = 0;
             SetMaxFrame = Math.Max(importer.FrameRects.Count, 1);
