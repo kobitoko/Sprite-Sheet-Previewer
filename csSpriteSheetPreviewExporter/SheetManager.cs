@@ -34,6 +34,7 @@ namespace csSpriteSheetPreviewer
             previewer.SpriteSheet = new Bitmap(previewer.FileNames.First<string>());
             previewer.SheetSize = previewer.SpriteSheet.Size;
             setRectsToSheet();
+            previewer.Frames.Add(previewer.SpriteSheet.Clone() as Bitmap);
         }
 
         public void GetFramesFromSheet(int colx, int rowy)

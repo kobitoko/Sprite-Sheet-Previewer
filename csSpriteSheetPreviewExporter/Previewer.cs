@@ -96,7 +96,7 @@ namespace csSpriteSheetPreviewer
         {
             Bitmap frameToReturn;
             if (isSpriteSheet)
-                frameToReturn = SpriteSheet.Clone(importer.FrameRects[index], SpriteSheet.PixelFormat);
+                frameToReturn = bitmapList[0].Clone(importer.FrameRects[index], SpriteSheet.PixelFormat);
             else
                 frameToReturn = bitmapList[index];
             return frameToReturn;
@@ -144,7 +144,10 @@ namespace csSpriteSheetPreviewer
                 for (int i = 0; i<SetMaxFrame; i++)
                 {
                     //Add the image to gifEncoder with default Quality
-                    gifCreator.AddFrame(GetFrame(i), GifQuality.Bit8); 
+                    if(isSpriteSheet)
+                        gifCreator.AddFrame(sheet.Clone(importer.FrameRects[i], SpriteSheet.PixelFormat), GifQuality.Bit8);
+                    else
+                        gifCreator.AddFrame(GetFrame(i), GifQuality.Bit8); 
                     // Delegate, calls function to update the progressbar in the UI.
                     UiProgressUpdate();
                 }
@@ -153,8 +156,9 @@ namespace csSpriteSheetPreviewer
 
         public void ChangeSheet(int colx, int rowy)
         {
-            this.Clear(true);
+            t.Stop();
             importer.GetFramesFromSheet(colx, rowy);
+            indexImg = 0;
             SetMaxFrame = Math.Max(importer.FrameRects.Count, 1);
             t.Start();
         }

@@ -110,31 +110,6 @@ namespace csSpriteSheetPreviewExporter
             previewImageBox.Refresh();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox4_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonZoomIn_Click(object sender, EventArgs e)
         {
             zoomIn(true);

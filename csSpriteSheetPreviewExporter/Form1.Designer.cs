@@ -71,7 +71,7 @@
             this.previewImageBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewImageBox.Location = new System.Drawing.Point(3, 16);
             this.previewImageBox.Name = "previewImageBox";
-            this.previewImageBox.Size = new System.Drawing.Size(578, 398);
+            this.previewImageBox.Size = new System.Drawing.Size(619, 398);
             this.previewImageBox.TabIndex = 2;
             this.previewImageBox.TabStop = false;
             this.previewImageBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewImageBox_MouseDown);
@@ -88,10 +88,9 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox1.Size = new System.Drawing.Size(170, 417);
+            this.groupBox1.Size = new System.Drawing.Size(129, 417);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // exportGifProgress
             // 
@@ -109,7 +108,7 @@
             this.groupBox5.Controls.Add(this.ColumnsXin);
             this.groupBox5.Location = new System.Drawing.Point(0, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(168, 126);
+            this.groupBox5.Size = new System.Drawing.Size(168, 73);
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Sprite Sheet Options";
@@ -117,7 +116,7 @@
             // RowsY
             // 
             this.RowsY.AutoSize = true;
-            this.RowsY.Location = new System.Drawing.Point(62, 39);
+            this.RowsY.Location = new System.Drawing.Point(65, 25);
             this.RowsY.Name = "RowsY";
             this.RowsY.Size = new System.Drawing.Size(34, 13);
             this.RowsY.TabIndex = 4;
@@ -126,7 +125,7 @@
             // ColumnsX
             // 
             this.ColumnsX.AutoSize = true;
-            this.ColumnsX.Location = new System.Drawing.Point(5, 39);
+            this.ColumnsX.Location = new System.Drawing.Point(12, 25);
             this.ColumnsX.Name = "ColumnsX";
             this.ColumnsX.Size = new System.Drawing.Size(47, 13);
             this.ColumnsX.TabIndex = 3;
@@ -134,18 +133,18 @@
             // 
             // RowsYin
             // 
-            this.RowsYin.Location = new System.Drawing.Point(65, 55);
+            this.RowsYin.Location = new System.Drawing.Point(68, 41);
             this.RowsYin.Name = "RowsYin";
-            this.RowsYin.Size = new System.Drawing.Size(54, 20);
+            this.RowsYin.Size = new System.Drawing.Size(40, 20);
             this.RowsYin.TabIndex = 1;
             this.RowsYin.Text = "1";
             this.RowsYin.TextChanged += new System.EventHandler(this.RowsYin_TextChanged);
             // 
             // ColumnsXin
             // 
-            this.ColumnsXin.Location = new System.Drawing.Point(8, 55);
+            this.ColumnsXin.Location = new System.Drawing.Point(15, 41);
             this.ColumnsXin.Name = "ColumnsXin";
-            this.ColumnsXin.Size = new System.Drawing.Size(51, 20);
+            this.ColumnsXin.Size = new System.Drawing.Size(40, 20);
             this.ColumnsXin.TabIndex = 0;
             this.ColumnsXin.Text = "1";
             this.ColumnsXin.TextChanged += new System.EventHandler(this.ColumnsXin_TextChanged);
@@ -156,7 +155,7 @@
             this.GifButton.AutoSize = true;
             this.GifButton.Location = new System.Drawing.Point(8, 386);
             this.GifButton.Name = "GifButton";
-            this.GifButton.Size = new System.Drawing.Size(152, 23);
+            this.GifButton.Size = new System.Drawing.Size(115, 23);
             this.GifButton.TabIndex = 0;
             this.GifButton.Text = "Export Gif";
             this.GifButton.UseVisualStyleBackColor = true;
@@ -188,12 +187,11 @@
             // 
             this.groupBox2.Controls.Add(this.previewImageBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(170, 53);
+            this.groupBox2.Location = new System.Drawing.Point(129, 53);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(584, 417);
+            this.groupBox2.Size = new System.Drawing.Size(625, 417);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // groupBox3
             // 
@@ -207,7 +205,6 @@
             this.groupBox3.Size = new System.Drawing.Size(754, 53);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // playButton
             // 
