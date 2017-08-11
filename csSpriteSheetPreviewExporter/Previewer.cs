@@ -151,7 +151,7 @@ namespace csSpriteSheetPreviewer
             using (AnimatedGifCreator gifCreator = AnimatedGif.AnimatedGif.Create($"{path}\\Animated_{filename}.gif", this.GetFrameDelay()))
             {
                 //Enumerate through all the frames
-                for (int i = 0; i<SetMaxFrame; i++)
+                for (int i = 0; i<=SetMaxFrame; i++)
                 {
                     //Add the image to gifEncoder with default Quality
                     if(isSpriteSheet)
