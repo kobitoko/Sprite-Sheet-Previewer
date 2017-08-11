@@ -66,6 +66,5 @@ namespace csSpriteSheetPreviewer
             RectangleF rectOfSheet = new RectangleF(new PointF(0, 0), sheetSize);
             framesRects.Add(rectOfSheet);
         }
-
     }
 }

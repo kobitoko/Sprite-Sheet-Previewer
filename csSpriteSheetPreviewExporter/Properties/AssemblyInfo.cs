@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("csSpriteSheetPreviewExporter")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Sprite Sheet Previewer")]
+[assembly: AssemblyDescription("To preview a sprite sheet or sprites and export as a Gif.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("csSpriteSheetPreviewExporter")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyProduct("Sprite Sheet Previewer")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

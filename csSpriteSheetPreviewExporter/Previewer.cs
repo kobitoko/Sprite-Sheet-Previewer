@@ -161,6 +161,8 @@ namespace csSpriteSheetPreviewer
 
         public void ChangeSheet(int colx, int rowy)
         {
+            if (!isSpriteSheet)
+                return;
             t.Stop();
             importer.GetFramesFromSheet(colx, rowy);
             indexImg = 0;
